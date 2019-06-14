@@ -16,9 +16,10 @@
 				value="jdbc:mysql://localhost:3306/book?useSSl=false&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC" />
 			<property name="javax.persistence.jdbc.user" value="root" />
 			<property name="javax.persistence.jdbc.password" value="" />
+			<!--INFO DANS LA CONSOLE -->
 			<property name="javax.persistence.jdbc.logging.level"
 				value="INFO" />
-
+			<!-- -->
 			<property name="hibernate.archive.autodetection"
 				value="class" />
 			<property name="hibernate.show_sql" value="true" />
