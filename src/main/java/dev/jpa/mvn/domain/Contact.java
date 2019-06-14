@@ -3,24 +3,28 @@ package dev.jpa.mvn.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Contact implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private Long id;
-	@Column(name = "email")
+	@Column(name = "email", unique = true)
 	private String email;
-	@Transient
 	private String first_name;
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinColumn(name = "address_id")
+	private Address address;
 
 	// ----------Constructor----------\\
 	public Contact() {
@@ -39,9 +43,17 @@ public class Contact implements Serializable {
 		return email;
 	}
 
+	public Address getAddress() {
+		return address;
+	}
+
 	// ------SETTER------\\
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 	public void setEmail(String email) {
@@ -52,7 +64,6 @@ public class Contact implements Serializable {
 		this.first_name = first_name;
 	}
 
-	// -------------@Override----------------------\\
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -62,6 +73,8 @@ public class Contact implements Serializable {
 		builder.append(email);
 		builder.append(", first_name=");
 		builder.append(first_name);
+		builder.append(", address=");
+		builder.append(address);
 		builder.append("]");
 		return builder.toString();
 	}
